@@ -9,8 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -36,7 +35,7 @@ public class StarsServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        System.out.println("StarsServlet hit");
         response.setContentType("application/json"); // Response mime type
 
         // Output stream to STDOUT
@@ -79,6 +78,30 @@ public class StarsServlet extends HttpServlet {
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)
             response.setStatus(200);
+
+            System.out.println("At line 84: response status was set");
+
+            String contextPath = request.getServletContext().getRealPath("/");
+
+            System.out.println("At line 88: RealPath was retrieved");
+
+            String logFilePath = contextPath + "log.txt";
+
+            System.out.println("============ New File Path: " + logFilePath);
+
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true));
+
+                // Writing content to the file
+                writer.append("This text was written at: " + System.nanoTime());
+
+                // Closing the writer is important to ensure that the data is flushed and the file is properly closed.
+                writer.close();
+                System.out.println("Data has been written to the file.");
+
+            } catch (IOException e) {
+                System.err.println("Error writing to the file: " + e.getMessage());
+            }
 
         } catch (Exception e) {
 
