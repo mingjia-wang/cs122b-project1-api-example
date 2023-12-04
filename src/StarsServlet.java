@@ -36,6 +36,9 @@ public class StarsServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("StarsServlet hit");
+        File file =  new File("/Users/mingjia/Desktop/Tomcat/webapps/cs122b_project1_api_example_war/log.txt").getAbsoluteFile();
+        file.createNewFile();
+        System.out.println("File exists: " + file.exists());
         response.setContentType("application/json"); // Response mime type
 
         // Output stream to STDOUT
@@ -83,25 +86,45 @@ public class StarsServlet extends HttpServlet {
 
             String contextPath = request.getServletContext().getRealPath("/");
 
-            System.out.println("At line 88: RealPath was retrieved");
+            String logfilePath = contextPath + "log.txt";
 
-            String logFilePath = contextPath + "log.txt";
+            System.out.println("logFilePath: " + logfilePath);
 
-            System.out.println("============ New File Path: " + logFilePath);
-
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true));
-
-                // Writing content to the file
-                writer.append("This text was written at: " + System.nanoTime());
-
-                // Closing the writer is important to ensure that the data is flushed and the file is properly closed.
+            File log = new File(logfilePath);
+            System.out.println("log.exists: " + log.getAbsoluteFile().exists());
+            try{
+                if(log.getAbsoluteFile().exists()==false){
+                    System.out.println("We had to make a new file.");
+                    log.createNewFile();
+                }
+                PrintWriter writer = new PrintWriter(new FileWriter(log, true));
+                writer.append("******* " + System.nanoTime() + " ******* " + "\n");
                 writer.close();
-                System.out.println("Data has been written to the file.");
-
-            } catch (IOException e) {
-                System.err.println("Error writing to the file: " + e.getMessage());
+            }catch(IOException e){
+                System.out.println("COULD NOT LOG!!");
+                e.printStackTrace();
             }
+//            String contextPath = request.getServletContext().getRealPath("/");
+//
+//            System.out.println("At line 88: RealPath was retrieved");
+//
+//            String logFilePath = contextPath + "log.txt";
+//
+//            System.out.println("============ New File Path: " + logFilePath);
+//
+//            try {
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true));
+//
+//                // Writing content to the file
+//                writer.write("This text was written at: " + System.nanoTime());
+//
+//                // Closing the writer is important to ensure that the data is flushed and the file is properly closed.
+//                writer.close();
+//                System.out.println("Data has been written to the file.");
+//
+//            } catch (IOException e) {
+//                System.err.println("Error writing to the file: " + e.getMessage());
+//            }
 
         } catch (Exception e) {
 
