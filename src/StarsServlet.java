@@ -36,9 +36,9 @@ public class StarsServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("StarsServlet hit");
-        File file =  new File("/Users/mingjia/Desktop/Tomcat/webapps/cs122b_project1_api_example_war/log.txt").getAbsoluteFile();
-        file.createNewFile();
-        System.out.println("File exists: " + file.exists());
+//        File file =  new File("/Users/mingjia/Desktop/Tomcat/webapps/cs122b_project1_api_example_war/log.txt").getAbsoluteFile();
+//        file.createNewFile();
+//        System.out.println("File exists: " + file.exists());
         response.setContentType("application/json"); // Response mime type
 
         // Output stream to STDOUT
@@ -91,14 +91,18 @@ public class StarsServlet extends HttpServlet {
             System.out.println("logFilePath: " + logfilePath);
 
             File log = new File(logfilePath);
-            System.out.println("log.exists: " + log.getAbsoluteFile().exists());
+            log.createNewFile();
+            System.out.println("log.exists: " + log.exists());
+            System.out.println("Return value of log.createNewFile(): " + log.createNewFile());
             try{
-                if(log.getAbsoluteFile().exists()==false){
+                if(log.exists()==false){
                     System.out.println("We had to make a new file.");
                     log.createNewFile();
                 }
+
+//                FileWriter writer = new FileWriter(log, true);
                 PrintWriter writer = new PrintWriter(new FileWriter(log, true));
-                writer.append("******* " + System.nanoTime() + " ******* " + "\n");
+                writer.write("******* " + System.nanoTime() + " ******* " + "\n");
                 writer.close();
             }catch(IOException e){
                 System.out.println("COULD NOT LOG!!");
