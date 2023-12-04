@@ -90,19 +90,21 @@ public class StarsServlet extends HttpServlet {
 
             System.out.println("logFilePath: " + logfilePath);
 
-            File log = new File(logfilePath);
-            log.createNewFile();
-            System.out.println("log.exists: " + log.exists());
-            System.out.println("Return value of log.createNewFile(): " + log.createNewFile());
+//            File log = new File(logfilePath);
+//            log.createNewFile();
+//            System.out.println("log.exists: " + log.exists());
+//            System.out.println("Return value of log.createNewFile(): " + log.createNewFile());
             try{
-                if(log.exists()==false){
-                    System.out.println("We had to make a new file.");
-                    log.createNewFile();
-                }
+//                if (log.createNewFile()) {
+//                    System.out.println("We had to make a new file.");
+//                }
+//                else {
+//                    System.out.println("File already exists");
+//                }
 
 //                FileWriter writer = new FileWriter(log, true);
-                PrintWriter writer = new PrintWriter(new FileWriter(log, true));
-                writer.write("******* " + System.nanoTime() + " ******* " + "\n");
+                PrintWriter writer = new PrintWriter(new FileWriter(logfilePath, true));
+                writer.append("******* " + System.nanoTime() + " ******* " + "\n");
                 writer.close();
             }catch(IOException e){
                 System.out.println("COULD NOT LOG!!");
