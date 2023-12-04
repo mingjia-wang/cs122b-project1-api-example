@@ -110,13 +110,13 @@ public class StarsServlet extends HttpServlet {
 //                    String logPath = contextPath + filename;
 
                     // Create File object
-//                    File file = new File(filePath, filename);
+                    File file = new File("log.txt");
 //
 //                    // Ensure the directory exists
 //                    file.getParentFile().mkdirs();
 
                     // Create FileWriter with append mode
-                    FileWriter fw = new FileWriter(logfilePath, true);
+                    FileWriter fw = new FileWriter(file, true);
 
                     // Create BufferedWriter for better performance
                     BufferedWriter bw = new BufferedWriter(fw);
