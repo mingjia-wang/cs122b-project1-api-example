@@ -94,7 +94,7 @@ public class StarsServlet extends HttpServlet {
 //            log.createNewFile();
 //            System.out.println("log.exists: " + log.exists());
 //            System.out.println("Return value of log.createNewFile(): " + log.createNewFile());
-            try{
+//            try{
 //                if (log.createNewFile()) {
 //                    System.out.println("We had to make a new file.");
 //                }
@@ -103,13 +103,44 @@ public class StarsServlet extends HttpServlet {
 //                }
 
 //                FileWriter writer = new FileWriter(log, true);
-                PrintWriter writer = new PrintWriter(new FileWriter(logfilePath, true));
-                writer.append("******* " + System.nanoTime() + " ******* " + "\n");
-                writer.close();
-            }catch(IOException e){
-                System.out.println("COULD NOT LOG!!");
-                e.printStackTrace();
-            }
+                try {
+//                    String filePath = contextPath;
+//                    String filename = "log.txt";
+
+//                    String logPath = contextPath + filename;
+
+                    // Create File object
+//                    File file = new File(filePath, filename);
+//
+//                    // Ensure the directory exists
+//                    file.getParentFile().mkdirs();
+
+                    // Create FileWriter with append mode
+                    FileWriter fw = new FileWriter(logfilePath, true);
+
+                    // Create BufferedWriter for better performance
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                    // Append data to the file
+                    bw.write("add a line\n");
+
+                    // Close the BufferedWriter (this will also close the FileWriter)
+                    bw.close();
+
+                    System.out.println("Data appended to the file successfully.");
+
+                } catch (IOException ioe) {
+                    System.err.println("IOException: " + ioe.getMessage());
+                    ioe.printStackTrace(); // Print the stack trace for debugging
+                }
+
+//                PrintWriter writer = new PrintWriter(new FileWriter(logfilePath, true));
+//                writer.append("******* " + System.nanoTime() + " ******* " + "\n");
+//                writer.close();
+//            }catch(IOException e){
+//                System.out.println("COULD NOT LOG!!");
+//                e.printStackTrace();
+//            }
 //            String contextPath = request.getServletContext().getRealPath("/");
 //
 //            System.out.println("At line 88: RealPath was retrieved");
